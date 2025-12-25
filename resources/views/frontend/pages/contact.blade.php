@@ -1,6 +1,47 @@
 @extends('frontend.layouts.master')
 
 @section('main-content')
+
+	<style>
+		.map-wrapper {
+		    display: flex;
+		    justify-content: center;
+		    padding: 40px 0;
+		    background: #f8f8f8;
+		}
+
+		.map-card {
+		    width: 90%;
+			height: 390px;
+		    max-width: 900px;
+		    background: #ffffff;
+		    border-radius: 15px;
+		    padding: 0px;
+		    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+		    overflow: hidden;
+		    transition: transform .25s ease, box-shadow .25s ease;
+		}
+
+		.map-card:hover {
+		    box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.20);
+		}
+
+		/* Make iframe responsive */
+		.map-card iframe {
+		    width: 100%;
+		    height: 450px;
+		    border: 0;
+		    border-radius: 12px;
+		}
+
+		/* Mobile responsiveness */
+		@media(max-width: 768px){
+		    .map-card iframe {
+		        height: 330px;
+		    }
+		}
+	</style>
+
 	<!-- Breadcrumbs -->
 	<div class="breadcrumbs">
 		<div class="container">
@@ -106,16 +147,21 @@
 	<!--/ End Contact -->
 	
 	<!-- Map Section -->
-	<div class="map-section">
-		<div id="myMap">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14130.857353934944!2d85.36529494999999!3d27.6952226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sne!2snp!4v1595323330171!5m2!1sne!2snp" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-		</div>
+	<div class="map-wrapper">
+	    <div class="map-card">
+	        <iframe 
+				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117925.33439927726!2d88.34735275!3d22.53542735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f882db4908f667%3A0x43e330e68f6c2cbc!2sKolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1765948900372!5m2!1sen!2sin" 
+				width="" 
+				height="" 
+				style="border:0;" 
+				allowfullscreen="" 
+				loading="lazy" 
+				referrerpolicy="no-referrer-when-downgrade">
+			</iframe>
+	    </div>
 	</div>
-	<!--/ End Map Section -->
-	
-	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
-	<!-- End Shop Newsletter -->
+	<!-- End Map Section -->
+
 	<!--================Contact Success  =================-->
 	<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">

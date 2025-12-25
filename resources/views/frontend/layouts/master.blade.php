@@ -2,8 +2,9 @@
 <html lang="zxx">
 <head>
 	@include('frontend.layouts.head')	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="js">
+<body class="js faq-page">
 	
 	<!-- Preloader -->
 	<div class="preloader">
@@ -21,7 +22,7 @@
 	@include('frontend.layouts.header')
 	<!--/ End Header -->
 	@yield('main-content')
-	
+	<!--->
 	@include('frontend.layouts.footer')
 
 </body>

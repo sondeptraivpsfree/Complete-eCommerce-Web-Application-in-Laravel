@@ -32,12 +32,28 @@
 <!-- Jquery Ui -->
 <link rel="stylesheet" href="{{asset('frontend/css/jquery-ui.css')}}">
 
-<!-- Eshop StyleSheet -->
+<!-- Ecommerce StyleSheet -->
 <link rel="stylesheet" href="{{asset('frontend/css/reset.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
-<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
 <style>
+
+    /* Disable theme section outlines */
+    .faq-page *:focus,
+    .faq-page section::before,
+    .faq-page section::after {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    /* Kill one-page-nav highlight box */
+    .faq-page .onepage-nav,
+    .faq-page .active-section,
+    .faq-page .scroll-highlight {
+        display: none !important;
+    }
+
     /* Multilevel dropdown */
     .dropdown-submenu {
     position: relative;
@@ -57,6 +73,5 @@
     margin-left: 0px;
     }
 
-    /*
 </style>
 @stack('styles')

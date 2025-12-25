@@ -4942,7 +4942,7 @@ a.badge-warning:focus, a.badge-warning.focus {
 }
 
 .badge-danger {
-  color: #fff;
+  color: #ffff;
   background-color: #e74a3b;
 }
 
@@ -5059,6 +5059,48 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 .alert-secondary .alert-link {
   color: #2d2e33;
+}
+
+.success-toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: #16a34a;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    animation: slideIn .5s ease, fadeOut .4s ease 3.2s forwards;
+    z-index: 9999;
+}
+
+.success-toast .check {
+    background: rgba(255,255,255,.25);
+    border-radius: 50%;
+    padding: 6px 9px;
+    font-weight: bold;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(120%);
+    }
 }
 
 .alert-success {
@@ -9588,7 +9630,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 }
 
 .text-success {
-  color: #1cc88a !important;
+  color: #f6c23e !important;
 }
 
 a.text-success:hover, a.text-success:focus {
@@ -9596,7 +9638,7 @@ a.text-success:hover, a.text-success:focus {
 }
 
 .text-info {
-  color: #36b9cc !important;
+  color: #1cc88a !important;
 }
 
 a.text-info:hover, a.text-info:focus {
@@ -9604,7 +9646,7 @@ a.text-info:hover, a.text-info:focus {
 }
 
 .text-warning {
-  color: #f6c23e !important;
+  color: #dc143c !important;
 }
 
 a.text-warning:hover, a.text-warning:focus {
@@ -9873,16 +9915,64 @@ a:focus {
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
 
+/* dark sidebar (#111827) */
 .bg-gradient-primary {
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-color: #111827 !important;
+  background-image: none !important;
   background-size: cover;
+  color: #e5e7eb; /* text color on the sidebar */
 }
 
+/* secondary gradient */
 .bg-gradient-secondary {
-  background-color: #858796;
-  background-image: linear-gradient(180deg, #858796 10%, #60616f 100%);
+  background-color: #1f2937 !important; /* Dark gray */
+  background-image: none !important;
   background-size: cover;
+  color: #e5e7eb;
+}
+
+/* sidebar text/icons use lighter color */
+.sidebar .nav-item .nav-link,
+.sidebar .sidebar-brand,
+.sidebar .sidebar-brand * {
+  color: #d1d5db !important; /* lighter text */
+}
+
+/* Make the active/hover block smaller & tighter */
+.sidebar .nav-item .nav-link {
+  padding: 15px 15px !important;         /* reduce height */
+  margin: 5px 0 !important;              /* tighten spacing */
+  border-radius: 50px !important;        /* smaller, cleaner shape */
+}
+
+/* Hover and active effect like your second image (rounded, slightly lighter, subtle inner border) */
+.sidebar .nav-item .nav-link:hover,
+.sidebar .nav-item .nav-link:focus,
+.sidebar .nav-item .nav-link.active,
+.sidebar .nav-item .nav-link.show {
+  background: rgba(31, 41, 55, 0.9) !important;   /* subtle lighter block */
+  color: #ffffff !important;                      /* ensure active text is readable */
+  border-radius: 50px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.05);
+  transition: all 0.12s ease-in-out;
+}
+
+/* If icons need color correction */
+.sidebar .nav-item .nav-link .fas,
+.sidebar .nav-item .nav-link .far,
+.sidebar .nav-item .nav-link .svg-inline--fa {
+  color: #9ca3af !important;
+}
+
+/* Make the active item a bit more pronounced */
+.sidebar .nav-item .nav-link.active {
+  background: rgba(255,255,255,0.06) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* Keep separators and small elements matched to dark theme */
+.sidebar hr {
+  border-color: rgba(255,255,255,0.04);
 }
 
 .bg-gradient-success {
@@ -10031,7 +10121,7 @@ a:focus {
 }
 
 .border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+  border-left: 0.25rem solid #f6c23e !important;
 }
 
 .border-bottom-success {
@@ -10039,7 +10129,7 @@ a:focus {
 }
 
 .border-left-info {
-  border-left: 0.25rem solid #36b9cc !important;
+  border-left: 0.25rem solid #1cc88a !important;
 }
 
 .border-bottom-info {
@@ -10047,7 +10137,7 @@ a:focus {
 }
 
 .border-left-warning {
-  border-left: 0.25rem solid #f6c23e !important;
+  border-left: 0.25rem solid #dc143c !important;
 }
 
 .border-bottom-warning {
@@ -10419,13 +10509,12 @@ a:focus {
 }
 
 .sidebar .sidebar-brand {
-  height: 4.375rem;
+  height: auto !important;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 800;
   padding: 1.5rem 1rem;
   text-align: center;
-  text-transform: uppercase;
   letter-spacing: 0.05rem;
   z-index: 1;
 }
@@ -10434,12 +10523,27 @@ a:focus {
   font-size: 2rem;
 }
 
+.sidebar-brand-text {
+    font-size: 1.25rem;
+    text-transform: none !important;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.sidebar-brand-subtext {
+    font-size: 0.85rem;
+    text-transform: none !important;
+    font-weight: 400;
+    color: #cbd5e1;
+}
+
 .sidebar .sidebar-brand .sidebar-brand-text {
   display: none;
 }
 
 .sidebar hr.sidebar-divider {
   margin: 0 1rem 1rem;
+  color: #fff;
 }
 
 .sidebar .sidebar-heading {
@@ -10798,24 +10902,48 @@ a:focus {
 
 @media (min-width: 768px) {
   .chart-pie {
-    height: calc(20rem - 43px) !important;
+    position: relative;
+    height: 260px !important;
+    max-width: 260px !important;
+    margin: auto;
   }
 }
 
+.pie-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+}
+
+.pie-center-text .total-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2e3a59;
+}
+
+.pie-center-text .total-label {
+    font-size: 13px;
+    color: #858796;
+    margin-top: 2px;
+}
+
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("https://i.pinimg.com/1200x/d3/75/2a/d3752a662c7976a255e055a602fa48cf.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+  background: url("https://i.pinimg.com/1200x/35/79/19/35791961af4bfd4dd6f5157a921cd240.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .bg-password-image {
-  background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
+  background: url("https://i.pinimg.com/1200x/9f/5d/44/9f5d44fd24ce845f36c35469c3d22914.jpg");
   background-position: center;
   background-size: cover;
 }

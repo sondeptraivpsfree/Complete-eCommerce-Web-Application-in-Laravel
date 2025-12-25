@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Settings;
+use App\Models\Order;
 use App\User;
 use App\Rules\MatchOldPassword;
 use Hash;
@@ -13,19 +14,22 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 class AdminController extends Controller
 {
-    public function index(){
-        $data = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
-        ->where('created_at', '>', Carbon::today()->subDay(6))
-        ->groupBy('day_name','day')
-        ->orderBy('day')
-        ->get();
-     $array[] = ['Name', 'Number'];
-     foreach($data as $key => $value)
-     {
-       $array[++$key] = [$value->day_name, $value->count];
-     }
-    //  return $data;
-     return view('backend.index')->with('users', json_encode($array));
+
+    public function index()
+    {
+        // Order status pie chart data
+        $statuses = ['new', 'process', 'delivered', 'cancel'];
+
+        $chartData = [['Status', 'Orders']];
+
+        foreach ($statuses as $status) {
+            $count = Order::where('status', $status)->count();
+            $chartData[] = [ucfirst($status), $count];
+        }
+
+        return view('backend.index', [
+            'users' => $chartData,   // keeping variable name to avoid JS changes
+        ]);
     }
 
     public function profile(){

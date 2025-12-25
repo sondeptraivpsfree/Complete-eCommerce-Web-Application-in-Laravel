@@ -1,5 +1,4 @@
 @extends('user.layouts.master')
-
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
@@ -49,8 +48,8 @@
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{$order->shipping->price}}</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>₹{{$order->shipping->price}}</td>
+                    <td>₹{{number_format($order->total_amount,2)}}</td>
                     <td>
                         @if($order->status=='new')
                           <span class="badge badge-primary">{{$order->status}}</span>

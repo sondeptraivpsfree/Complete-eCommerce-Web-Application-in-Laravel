@@ -1,6 +1,63 @@
-
 	<!-- Start Footer Area -->
 	<footer class="footer">
+		<style>
+			/* ===== Footer Logo Wrapper ===== */
+			.footer-logo {
+			    max-width: 200px;
+			    margin-bottom: 18px;
+			}
+
+			/* ===== Footer Logo Image ===== */
+			.footer-logo img {
+			    width: 100%;
+			    max-height: 150px;        /* PERFECT height for footer */
+			    height: auto;
+			    object-fit: contain;
+			    display: block;
+			}
+
+			/* Optional: subtle premium feel */
+			.footer-logo img {
+			    opacity: 0.95;
+			    transition: transform 0.3s ease, opacity 0.3s ease;
+			}
+
+			.footer-logo img:hover {
+			    transform: scale(1.03);
+			    opacity: 1;
+			}
+
+			/* Social Icons Container */
+		    .social-icons {
+		        display: flex;
+		        align-items: center;
+		        gap: 13px;
+		        margin-top: 15px;
+		    }
+
+		    /* Each Icon Wrapper */
+		    .social-icons a {
+		        display: flex;
+		        width: 35px;
+		        height: 35px;
+		        border-radius: 50%;
+		        overflow: hidden;
+		        transition: transform 0.2s ease-in-out;
+		    }
+
+		    /* Icon Image */
+		    .social-icons img {
+		        width: 100%;
+		        height: 100%;
+		        object-fit: contain;
+		    }
+
+		    /* Hover Effect */
+		    .social-icons a:hover {
+		        transform: scale(1.2);
+		    }
+
+		</style>
 		<!-- Footer Top -->
 		<div class="footer-top section">
 			<div class="container">
@@ -8,8 +65,8 @@
 					<div class="col-lg-5 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer about">
-							<div class="logo">
-								<a href="index.html"><img src="{{asset('backend/img/logo2.png')}}" alt="#"></a>
+							<div class="logo footer-logo">
+								<a href="index.html"><img src="{{asset('backend/img/ecom-logo2.png')}}" alt="#"></a>
 							</div>
 							@php
 								$settings=DB::table('settings')->get();
@@ -25,10 +82,10 @@
 							<h4>Information</h4>
 							<ul>
 								<li><a href="{{route('about-us')}}">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
+								<li><a href="{{ route('faq') }}">Faq</a></li>
+								<li><a href="{{ route('terms') }}">Terms & Conditions</a></li>
 								<li><a href="{{route('contact')}}">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
+								<li><a href="{{route('help')}}">Help</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
@@ -50,7 +107,7 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer social">
-							<h4>Get In Tuch</h4>
+							<h4>Get In Touch</h4>
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
@@ -60,7 +117,26 @@
 								</ul>
 							</div>
 							<!-- End Single Widget -->
-							<div class="sharethis-inline-follow-buttons"></div>
+							<div class="social-icons">
+
+							    <a href="https://facebook.com/souparna.dey.969/" target="_blank">
+							        <img src="{{ asset('frontend/icons/facebook.svg') }}" alt="Facebook">
+							    </a>
+
+							    <a href="https://instagram.com/i_am_souparna" target="_blank">
+							        <img src="{{ asset('frontend/icons/instagram.svg') }}" alt="Instagram">
+							    </a>
+
+							    <a href="https://youtube.com/@souparnadey3456" target="_blank">
+							        <img src="{{ asset('frontend/icons/youtube.svg') }}" alt="YouTube">
+							    </a>
+
+							    <a href="https://github.com/souparnadey" target="_blank">
+							        <img src="{{ asset('frontend/icons/github.svg') }}" alt="GitHub">
+							    </a>
+
+							</div>
+
 						</div>
 						<!-- End Single Widget -->
 					</div>
@@ -74,7 +150,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Copyright © {{date('Y')}} <a href="https://github.com/Prajwal100" target="_blank">Prajwal Rai</a>  -  All Rights Reserved.</p>
+								<p>Copyright © {{date('Y')}} <a href="https://github.com/souparnadey" target="_blank">Souparna Dey</a>  -  All Rights Reserved.</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">
@@ -124,7 +200,6 @@
 
 	<!-- Active JS -->
 	<script src="{{asset('frontend/js/active.js')}}"></script>
-
 	
 	@stack('scripts')
 	<script>

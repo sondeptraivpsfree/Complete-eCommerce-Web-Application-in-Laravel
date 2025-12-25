@@ -406,21 +406,7 @@ class FrontendController extends Controller
     }
 
     public function subscribe(Request $request){
-        if(! Newsletter::isSubscribed($request->email)){
-                Newsletter::subscribePending($request->email);
-                if(Newsletter::lastActionSucceeded()){
-                    request()->session()->flash('success','Subscribed! Please check your email');
-                    return redirect()->route('home');
-                }
-                else{
-                    Newsletter::getLastError();
-                    return back()->with('error','Something went wrong! please try again');
-                }
-            }
-            else{
-                request()->session()->flash('error','Already Subscribed');
-                return back();
-            }
+
     }
     
 }

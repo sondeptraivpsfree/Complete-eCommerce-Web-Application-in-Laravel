@@ -26,8 +26,23 @@
         <div class="container">
                 <form class="form" method="POST" action="{{route('cart.order')}}">
                     @csrf
+                    {{-- GLOBAL VALIDATION ERROR MESSAGE --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger" style="border-radius:8px; margin-bottom:20px;">
+                            <strong>Oopsiee!</strong> Please fix the highlighted fields below 🙂
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                    <script>
+                        window.onload = () => {
+                            document.querySelector('.form-error')?.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        };
+                    </script>
+                    @endif
                     <div class="row"> 
-
                         <div class="col-lg-8 col-12">
                             <div class="checkout-form">
                                 <h2>Make Your Checkout Here</h2>
@@ -37,303 +52,101 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>First Name<span>*</span></label>
-                                            <input type="text" name="first_name" placeholder="" value="{{old('first_name')}}" value="{{old('first_name')}}">
+                                            <input type="text" name="first_name" placeholder="" value="{{old('first_name')}}">
                                             @error('first_name')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class='form-error'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Last Name<span>*</span></label>
-                                            <input type="text" name="last_name" placeholder="" value="{{old('lat_name')}}">
+                                            <input type="text" name="last_name" placeholder="" value="{{old('last_name')}}">
                                             @error('last_name')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class='form-error'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Email Address<span>*</span></label>
-                                            <input type="email" name="email" placeholder="" value="{{old('email')}}">
+                                            <input type="email" name="email" placeholder="" value="{{old('email')}}" required>
                                             @error('email')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class='form-error'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Phone Number <span>*</span></label>
-                                            <input type="number" name="phone" placeholder="" required value="{{old('phone')}}">
+                                            <label>Contact Number <span>*</span></label>
+                                            <input type="tel" name="phone" placeholder="" value="{{ old('phone') }}" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" required>
                                             @error('phone')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class='form-error'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="col-lg-6 col-md-6 col-12"> 
                                         <div class="form-group">
-                                            <label>Country<span>*</span></label>
-                                            <select name="country" id="country">
-                                                <option value="AF">Afghanistan</option>
-                                                <option value="AX">Åland Islands</option>
-                                                <option value="AL">Albania</option>
-                                                <option value="DZ">Algeria</option>
-                                                <option value="AS">American Samoa</option>
-                                                <option value="AD">Andorra</option>
-                                                <option value="AO">Angola</option>
-                                                <option value="AI">Anguilla</option>
-                                                <option value="AQ">Antarctica</option>
-                                                <option value="AG">Antigua and Barbuda</option>
-                                                <option value="AR">Argentina</option>
-                                                <option value="AM">Armenia</option>
-                                                <option value="AW">Aruba</option>
-                                                <option value="AU">Australia</option>
-                                                <option value="AT">Austria</option>
-                                                <option value="AZ">Azerbaijan</option>
-                                                <option value="BS">Bahamas</option>
-                                                <option value="BH">Bahrain</option>
-                                                <option value="BD">Bangladesh</option>
-                                                <option value="BB">Barbados</option>
-                                                <option value="BY">Belarus</option>
-                                                <option value="BE">Belgium</option>
-                                                <option value="BZ">Belize</option>
-                                                <option value="BJ">Benin</option>
-                                                <option value="BM">Bermuda</option>
-                                                <option value="BT">Bhutan</option>
-                                                <option value="BO">Bolivia</option>
-                                                <option value="BA">Bosnia and Herzegovina</option>
-                                                <option value="BW">Botswana</option>
-                                                <option value="BV">Bouvet Island</option>
-                                                <option value="BR">Brazil</option>
-                                                <option value="IO">British Indian Ocean Territory</option>
-                                                <option value="VG">British Virgin Islands</option>
-                                                <option value="BN">Brunei</option>
-                                                <option value="BG">Bulgaria</option>
-                                                <option value="BF">Burkina Faso</option>
-                                                <option value="BI">Burundi</option>
-                                                <option value="KH">Cambodia</option>
-                                                <option value="CM">Cameroon</option>
-                                                <option value="CA">Canada</option>
-                                                <option value="CV">Cape Verde</option>
-                                                <option value="KY">Cayman Islands</option>
-                                                <option value="CF">Central African Republic</option>
-                                                <option value="TD">Chad</option>
-                                                <option value="CL">Chile</option>
-                                                <option value="CN">China</option>
-                                                <option value="CX">Christmas Island</option>
-                                                <option value="CC">Cocos [Keeling] Islands</option>
-                                                <option value="CO">Colombia</option>
-                                                <option value="KM">Comoros</option>
-                                                <option value="CG">Congo - Brazzaville</option>
-                                                <option value="CD">Congo - Kinshasa</option>
-                                                <option value="CK">Cook Islands</option>
-                                                <option value="CR">Costa Rica</option>
-                                                <option value="CI">Côte d’Ivoire</option>
-                                                <option value="HR">Croatia</option>
-                                                <option value="CU">Cuba</option>
-                                                <option value="CY">Cyprus</option>
-                                                <option value="CZ">Czech Republic</option>
-                                                <option value="DK">Denmark</option>
-                                                <option value="DJ">Djibouti</option>
-                                                <option value="DM">Dominica</option>
-                                                <option value="DO">Dominican Republic</option>
-                                                <option value="EC">Ecuador</option>
-                                                <option value="EG">Egypt</option>
-                                                <option value="SV">El Salvador</option>
-                                                <option value="GQ">Equatorial Guinea</option>
-                                                <option value="ER">Eritrea</option>
-                                                <option value="EE">Estonia</option>
-                                                <option value="ET">Ethiopia</option>
-                                                <option value="FK">Falkland Islands</option>
-                                                <option value="FO">Faroe Islands</option>
-                                                <option value="FJ">Fiji</option>
-                                                <option value="FI">Finland</option>
-                                                <option value="FR">France</option>
-                                                <option value="GF">French Guiana</option>
-                                                <option value="PF">French Polynesia</option>
-                                                <option value="TF">French Southern Territories</option>
-                                                <option value="GA">Gabon</option>
-                                                <option value="GM">Gambia</option>
-                                                <option value="GE">Georgia</option>
-                                                <option value="DE">Germany</option>
-                                                <option value="GH">Ghana</option>
-                                                <option value="GI">Gibraltar</option>
-                                                <option value="GR">Greece</option>
-                                                <option value="GL">Greenland</option>
-                                                <option value="GD">Grenada</option>
-                                                <option value="GP">Guadeloupe</option>
-                                                <option value="GU">Guam</option>
-                                                <option value="GT">Guatemala</option>
-                                                <option value="GG">Guernsey</option>
-                                                <option value="GN">Guinea</option>
-                                                <option value="GW">Guinea-Bissau</option>
-                                                <option value="GY">Guyana</option>
-                                                <option value="HT">Haiti</option>
-                                                <option value="HM">Heard Island and McDonald Islands</option>
-                                                <option value="HN">Honduras</option>
-                                                <option value="HK">Hong Kong SAR China</option>
-                                                <option value="HU">Hungary</option>
-                                                <option value="IS">Iceland</option>
-                                                <option value="IN">India</option>
-                                                <option value="ID">Indonesia</option>
-                                                <option value="IR">Iran</option>
-                                                <option value="IQ">Iraq</option>
-                                                <option value="IE">Ireland</option>
-                                                <option value="IM">Isle of Man</option>
-                                                <option value="IL">Israel</option>
-                                                <option value="IT">Italy</option>
-                                                <option value="JM">Jamaica</option>
-                                                <option value="JP">Japan</option>
-                                                <option value="JE">Jersey</option>
-                                                <option value="JO">Jordan</option>
-                                                <option value="KZ">Kazakhstan</option>
-                                                <option value="KE">Kenya</option>
-                                                <option value="KI">Kiribati</option>
-                                                <option value="KW">Kuwait</option>
-                                                <option value="KG">Kyrgyzstan</option>
-                                                <option value="LA">Laos</option>
-                                                <option value="LV">Latvia</option>
-                                                <option value="LB">Lebanon</option>
-                                                <option value="LS">Lesotho</option>
-                                                <option value="LR">Liberia</option>
-                                                <option value="LY">Libya</option>
-                                                <option value="LI">Liechtenstein</option>
-                                                <option value="LT">Lithuania</option>
-                                                <option value="LU">Luxembourg</option>
-                                                <option value="MO">Macau SAR China</option>
-                                                <option value="MK">Macedonia</option>
-                                                <option value="MG">Madagascar</option>
-                                                <option value="MW">Malawi</option>
-                                                <option value="MY">Malaysia</option>
-                                                <option value="MV">Maldives</option>
-                                                <option value="ML">Mali</option>
-                                                <option value="MT">Malta</option>
-                                                <option value="MH">Marshall Islands</option>
-                                                <option value="MQ">Martinique</option>
-                                                <option value="MR">Mauritania</option>
-                                                <option value="MU">Mauritius</option>
-                                                <option value="YT">Mayotte</option>
-                                                <option value="MX">Mexico</option>
-                                                <option value="FM">Micronesia</option>
-                                                <option value="MD">Moldova</option>
-                                                <option value="MC">Monaco</option>
-                                                <option value="MN">Mongolia</option>
-                                                <option value="ME">Montenegro</option>
-                                                <option value="MS">Montserrat</option>
-                                                <option value="MA">Morocco</option>
-                                                <option value="MZ">Mozambique</option>
-                                                <option value="MM">Myanmar [Burma]</option>
-                                                <option value="NA">Namibia</option>
-                                                <option value="NR">Nauru</option>
-                                                <option value="NP" selected="selected">Nepal</option>
-                                                <option value="NL">Netherlands</option>
-                                                <option value="AN">Netherlands Antilles</option>
-                                                <option value="NC">New Caledonia</option>
-                                                <option value="NZ">New Zealand</option>
-                                                <option value="NI">Nicaragua</option>
-                                                <option value="NE">Niger</option>
-                                                <option value="NG">Nigeria</option>
-                                                <option value="NU">Niue</option>
-                                                <option value="NF">Norfolk Island</option>
-                                                <option value="MP">Northern Mariana Islands</option>
-                                                <option value="KP">North Korea</option>
-                                                <option value="NO">Norway</option>
-                                                <option value="OM">Oman</option>
-                                                <option value="PK">Pakistan</option>
-                                                <option value="PW">Palau</option>
-                                                <option value="PS">Palestinian Territories</option>
-                                                <option value="PA">Panama</option>
-                                                <option value="PG">Papua New Guinea</option>
-                                                <option value="PY">Paraguay</option>
-                                                <option value="PE">Peru</option>
-                                                <option value="PH">Philippines</option>
-                                                <option value="PN">Pitcairn Islands</option>
-                                                <option value="PL">Poland</option>
-                                                <option value="PT">Portugal</option>
-                                                <option value="PR">Puerto Rico</option>
-                                                <option value="QA">Qatar</option>
-                                                <option value="RE">Réunion</option>
-                                                <option value="RO">Romania</option>
-                                                <option value="RU">Russia</option>
-                                                <option value="RW">Rwanda</option>
-                                                <option value="BL">Saint Barthélemy</option>
-                                                <option value="SH">Saint Helena</option>
-                                                <option value="KN">Saint Kitts and Nevis</option>
-                                                <option value="LC">Saint Lucia</option>
-                                                <option value="MF">Saint Martin</option>
-                                                <option value="PM">Saint Pierre and Miquelon</option>
-                                                <option value="VC">Saint Vincent and the Grenadines</option>
-                                                <option value="WS">Samoa</option>
-                                                <option value="SM">San Marino</option>
-                                                <option value="ST">São Tomé and Príncipe</option>
-                                                <option value="SA">Saudi Arabia</option>
-                                                <option value="SN">Senegal</option>
-                                                <option value="RS">Serbia</option>
-                                                <option value="SC">Seychelles</option>
-                                                <option value="SL">Sierra Leone</option>
-                                                <option value="SG">Singapore</option>
-                                                <option value="SK">Slovakia</option>
-                                                <option value="SI">Slovenia</option>
-                                                <option value="SB">Solomon Islands</option>
-                                                <option value="SO">Somalia</option>
-                                                <option value="ZA">South Africa</option>
-                                                <option value="GS">South Georgia</option>
-                                                <option value="KR">South Korea</option>
-                                                <option value="ES">Spain</option>
-                                                <option value="LK">Sri Lanka</option>
-                                                <option value="SD">Sudan</option>
-                                                <option value="SR">Suriname</option>
-                                                <option value="SJ">Svalbard and Jan Mayen</option>
-                                                <option value="SZ">Swaziland</option>
-                                                <option value="SE">Sweden</option>
-                                                <option value="CH">Switzerland</option>
-                                                <option value="SY">Syria</option>
-                                                <option value="TW">Taiwan</option>
-                                                <option value="TJ">Tajikistan</option>
-                                                <option value="TZ">Tanzania</option>
-                                                <option value="TH">Thailand</option>
-                                                <option value="TL">Timor-Leste</option>
-                                                <option value="TG">Togo</option>
-                                                <option value="TK">Tokelau</option>
-                                                <option value="TO">Tonga</option>
-                                                <option value="TT">Trinidad and Tobago</option>
-                                                <option value="TN">Tunisia</option>
-                                                <option value="TR">Turkey</option>
-                                                <option value="TM">Turkmenistan</option>
-                                                <option value="TC">Turks and Caicos Islands</option>
-                                                <option value="TV">Tuvalu</option>
-                                                <option value="UG">Uganda</option>
-                                                <option value="UA">Ukraine</option>
-                                                <option value="AE">United Arab Emirates</option>
-                                                <option value="Uk">United Kingdom</option>
-                                                <option value="UY">Uruguay</option>
-                                                <option value="UM">U.S. Minor Outlying Islands</option>
-                                                <option value="VI">U.S. Virgin Islands</option>
-                                                <option value="UZ">Uzbekistan</option>
-                                                <option value="VU">Vanuatu</option>
-                                                <option value="VA">Vatican City</option>
-                                                <option value="VE">Venezuela</option>
-                                                <option value="VN">Vietnam</option>
-                                                <option value="WF">Wallis and Futuna</option>
-                                                <option value="EH">Western Sahara</option>
-                                                <option value="YE">Yemen</option>
-                                                <option value="ZM">Zambia</option>
-                                                <option value="ZW">Zimbabwe</option>
+                                            <label>State <span>*</span></label>
+                                            <select name="state" id="state" required>
+
+                                                <option value="">Select Your State</option>
+
+                                                <option value="NRI" {{ old('state') == 'NRI' ? 'selected' : '' }}>Outside India</option>
+                                                <option value="AN" {{ old('state') == 'AN' ? 'selected' : '' }}>Andaman & Nicobar</option>
+                                                <option value="AP" {{ old('state') == 'AP' ? 'selected' : '' }}>Andhra Pradesh</option>
+                                                <option value="AR" {{ old('state') == 'AR' ? 'selected' : '' }}>Arunachal Pradesh</option>
+                                                <option value="AS" {{ old('state') == 'AS' ? 'selected' : '' }}>Assam</option>
+                                                <option value="BR" {{ old('state') == 'BR' ? 'selected' : '' }}>Bihar</option>
+                                                <option value="CG" {{ old('state') == 'CG' ? 'selected' : '' }}>Chhattisgarh</option>
+                                                <option value="CH" {{ old('state') == 'CH' ? 'selected' : '' }}>Chandigarh</option>
+                                                <option value="DN" {{ old('state') == 'DN' ? 'selected' : '' }}>Dadra & Nagar Haveli</option>
+                                                <option value="DD" {{ old('state') == 'DD' ? 'selected' : '' }}>Daman & Diu</option>
+                                                <option value="DL" {{ old('state') == 'DL' ? 'selected' : '' }}>Delhi</option>
+                                                <option value="GA" {{ old('state') == 'GA' ? 'selected' : '' }}>Goa</option>
+                                                <option value="GJ" {{ old('state') == 'GJ' ? 'selected' : '' }}>Gujarat</option>
+                                                <option value="HR" {{ old('state') == 'HR' ? 'selected' : '' }}>Haryana</option>
+                                                <option value="HP" {{ old('state') == 'HP' ? 'selected' : '' }}>Himachal Pradesh</option>
+                                                <option value="JK" {{ old('state') == 'JK' ? 'selected' : '' }}>Jammu & Kashmir</option>
+                                                <option value="JH" {{ old('state') == 'JH' ? 'selected' : '' }}>Jharkhand</option>
+                                                <option value="KA" {{ old('state') == 'KA' ? 'selected' : '' }}>Karnataka</option>
+                                                <option value="KL" {{ old('state') == 'KL' ? 'selected' : '' }}>Kerala</option>
+                                                <option value="LD" {{ old('state') == 'LD' ? 'selected' : '' }}>Lakshadweep</option>
+                                                <option value="MP" {{ old('state') == 'MP' ? 'selected' : '' }}>Madhya Pradesh</option>
+                                                <option value="MH" {{ old('state') == 'MH' ? 'selected' : '' }}>Maharashtra</option>
+                                                <option value="MN" {{ old('state') == 'MN' ? 'selected' : '' }}>Manipur</option>
+                                                <option value="ML" {{ old('state') == 'ML' ? 'selected' : '' }}>Meghalaya</option>
+                                                <option value="MZ" {{ old('state') == 'MZ' ? 'selected' : '' }}>Mizoram</option>
+                                                <option value="NL" {{ old('state') == 'NL' ? 'selected' : '' }}>Nagaland</option>
+                                                <option value="OD" {{ old('state') == 'OD' ? 'selected' : '' }}>Odisha</option>
+                                                <option value="PB" {{ old('state') == 'PB' ? 'selected' : '' }}>Punjab</option>
+                                                <option value="PY" {{ old('state') == 'PY' ? 'selected' : '' }}>Puducherry</option>
+                                                <option value="RJ" {{ old('state') == 'RJ' ? 'selected' : '' }}>Rajasthan</option>
+                                                <option value="SK" {{ old('state') == 'SK' ? 'selected' : '' }}>Sikkim</option>
+                                                <option value="TN" {{ old('state') == 'TN' ? 'selected' : '' }}>Tamil Nadu</option>
+                                                <option value="TS" {{ old('state') == 'TS' ? 'selected' : '' }}>Telangana</option>
+                                                <option value="TR" {{ old('state') == 'TR' ? 'selected' : '' }}>Tripura</option>
+                                                <option value="UP" {{ old('state') == 'UP' ? 'selected' : '' }}>Uttar Pradesh</option>
+                                                <option value="UK" {{ old('state') == 'UK' ? 'selected' : '' }}>Uttarakhand</option>
+                                                <option value="WB" {{ old('state') == 'WB' ? 'selected' : '' }}>West Bengal</option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Address Line 1<span>*</span></label>
-                                            <input type="text" name="address1" placeholder="" value="{{old('address1')}}">
-                                            @error('address1')
-                                                <span class='text-danger'>{{$message}}</span>
+                                            @error('state')
+                                                <div class="form-error">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Address Line 2</label>
+                                            <label>Full Address<span>*</span></label>
+                                            <input type="text" name="address1" placeholder="" required value="{{old('address1')}}">
+                                            @error('address1')
+                                                <span class='form-error'>{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Landmark</label>
                                             <input type="text" name="address2" placeholder="" value="{{old('address2')}}">
                                             @error('address2')
                                                 <span class='text-danger'>{{$message}}</span>
@@ -342,10 +155,10 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Postal Code</label>
-                                            <input type="text" name="post_code" placeholder="" value="{{old('post_code')}}">
+                                            <label>Postal Code<span>*</span></label>
+                                            <input type="text" name="post_code" placeholder="" required value="{{old('post_code')}}">
                                             @error('post_code')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class='form-error'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
@@ -361,23 +174,36 @@
                                     <h2>CART  TOTALS</h2>
                                     <div class="content">
                                         <ul>
-										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>${{number_format(Helper::totalCartPrice(),2)}}</span></li>
+										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">
+                                                Cart Subtotal
+                                                <span>₹{{number_format(Helper::totalCartPrice(),2)}}</span>
+                                            </li>
                                             <li class="shipping">
-                                                Shipping Cost
+                                                Shipping Cost<span>*</span>
+
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
                                                     <select name="shipping" class="nice-select">
-                                                        <option value="">Select your address</option>
+                                                        <option value="">Select your shipping method</option>
                                                         @foreach(Helper::shipping() as $shipping)
-                                                        <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: ${{$shipping->price}}</option>
+                                                            <option value="{{$shipping->id}}" data-price="{{$shipping->price}}">
+                                                                {{$shipping->type}}: ₹{{$shipping->price}}
+                                                            </option>
                                                         @endforeach
                                                     </select>
-                                                @else 
+
+                                                    @error('shipping')
+                                                        <div class="form-error">{{ $message }}</div>
+                                                    @enderror
+                                                @else
                                                     <span>Free</span>
                                                 @endif
                                             </li>
-                                            
+
                                             @if(session('coupon'))
-                                            <li class="coupon_price" data-price="{{session('coupon')['value']}}">You Save<span>${{number_format(session('coupon')['value'],2)}}</span></li>
+                                            <li class="coupon_price" data-price="{{session('coupon')['value']}}">
+                                                You Save
+                                                <span>₹{{number_format(session('coupon')['value'],2)}}</span>
+                                            </li>
                                             @endif
                                             @php
                                                 $total_amount=Helper::totalCartPrice();
@@ -386,9 +212,13 @@
                                                 }
                                             @endphp
                                             @if(session('coupon'))
-                                                <li class="last"  id="order_total_price">Total<span>${{number_format($total_amount,2)}}</span></li>
+                                                <li class="last"  id="order_total_price">Total
+                                                    <span>₹{{number_format($total_amount,2)}}</span>
+                                                </li>
                                             @else
-                                                <li class="last"  id="order_total_price">Total<span>${{number_format($total_amount,2)}}</span></li>
+                                                <li class="last"  id="order_total_price">Total
+                                                    <span>₹{{number_format($total_amount,2)}}</span>
+                                                </li>
                                             @endif
                                         </ul>
                                     </div>
@@ -401,10 +231,13 @@
                                         <div class="checkbox">
                                             {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
+                                                <input name="payment_method"  type="radio" value="upi" required> <label> UPI</label><br>
                                                 <input name="payment_method"  type="radio" value="cod"> <label> Cash On Delivery</label><br>
                                                 <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label> 
                                             </form-group>
-                                            
+                                            @error('payment_method')
+                                                <div class="form-error">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -420,7 +253,11 @@
                                 <div class="single-widget get-button">
                                     <div class="content">
                                         <div class="button">
-                                            <button type="submit" class="btn">proceed to checkout</button>
+                                            <button type="submit"
+                                                    class="btn"
+                                                    onclick="this.disabled=true;this.form.submit();">
+                                                proceed to checkout
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -428,6 +265,7 @@
                             </div>
                         </div>
                     </div>
+
                 </form>
         </div>
     </section>
@@ -442,7 +280,7 @@
                     <div class="single-service">
                         <i class="ti-rocket"></i>
                         <h4>Free shiping</h4>
-                        <p>Orders over $100</p>
+                        <p>All over India</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
@@ -468,7 +306,7 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-tag"></i>
-                        <h4>Best Peice</h4>
+                        <h4>Best Price</h4>
                         <p>Guaranteed price</p>
                     </div>
                     <!-- End Single Service -->
@@ -478,28 +316,6 @@
     </section>
     <!-- End Shop Services -->
     
-    <!-- Start Shop Newsletter  -->
-    <section class="shop-newsletter section">
-        <div class="container">
-            <div class="inner-top">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 col-12">
-                        <!-- Start Newsletter Inner -->
-                        <div class="inner">
-                            <h4>Newsletter</h4>
-                            <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                <button class="btn">Subscribe</button>
-                            </form>
-                        </div>
-                        <!-- End Newsletter Inner -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Newsletter -->
 @endsection
 @push('styles')
 	<style>
@@ -532,6 +348,15 @@
 			padding-right: 40px;
 			width: 100%;
 		}
+        .form-error {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
 		.list li{
 			margin-bottom:0 !important;
 		}
@@ -542,6 +367,10 @@
 		.form-select .nice-select::after {
 			top: 14px;
 		}
+        input:invalid,
+        select:invalid {
+            border-color: #dc2626;
+        }
 	</style>
 @endpush
 @push('scripts')
@@ -572,7 +401,7 @@
 				let subtotal = parseFloat( $('.order_subtotal').data('price') ); 
 				let coupon = parseFloat( $('.coupon_price').data('price') ) || 0; 
 				// alert(coupon);
-				$('#order_total_price span').text('$'+(subtotal + cost-coupon).toFixed(2));
+				$('#order_total_price span').text('₹'+(subtotal + cost-coupon).toFixed(2));
 			});
 
 		});

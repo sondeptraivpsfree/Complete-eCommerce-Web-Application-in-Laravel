@@ -36,7 +36,6 @@
                                     <div class="blog-meta">
                                         <span class="author"><a href="javascript:void(0);"><i class="fa fa-user"></i>By {{$post->author_info['name']}}</a><a href="javascript:void(0);"><i class="fa fa-calendar"></i>{{$post->created_at->format('M d, Y')}}</a><a href="javascript:void(0);"><i class="fa fa-comments"></i>Comment ({{$post->allComments->count()}})</a></span>
                                     </div>
-                                    <div class="sharethis-inline-reaction-buttons"></div>
                                     <div class="content">
                                         @if($post->quote)
                                         <blockquote> <i class="fa fa-quote-left"></i> {!! ($post->quote) !!}</blockquote>
@@ -181,7 +180,7 @@
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
                         <div class="single-widget newsletter">
-                            <h3 class="title">Newslatter</h3>
+                            <h3 class="title">Subscribe & Follow Us</h3>
                             <div class="letter-inner">
                                 <h4>Subscribe & get news <br> latest updates.</h4>
                                 <form action="{{route('subscribe')}}" method="POST">
@@ -202,7 +201,6 @@
     <!--/ End Blog Single -->
 @endsection
 @push('styles')
-<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
 @endpush
 @push('scripts')
 <script>

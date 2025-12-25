@@ -20,10 +20,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders=Order::orderBy('id','DESC')->paginate(10);
-        return view('backend.order.index')->with('orders',$orders);
+        $orders = Order::query();
+
+        // 🔥 filter by status from query string
+        if ($request->status) {
+            $orders->where('status', $request->status);
+        }
+
+        $orders = $orders->orderBy('id', 'DESC')->paginate(10);
+
+        return view('backend.order.index', compact('orders'));
     }
 
     /**
@@ -44,111 +52,98 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'address1'=>'string|required',
-            'address2'=>'string|nullable',
-            'coupon'=>'nullable|numeric',
-            'phone'=>'numeric|required',
-            'post_code'=>'string|nullable',
-            'email'=>'string|required'
-        ]);
-        // return $request->all();
+        $request->validate(
+            [
+                'first_name'     => 'required|string|min:2|max:50',
+                'last_name'      => 'required|string|min:2|max:50',
+                'email'          => 'required|email',
+                'phone'          => ['required', 'regex:/^[6-9]\d{9}$/'],
+                'state'          => 'required|string',
+                'address1'       => 'required|string|min:5',
+                'address2'       => 'nullable|string|max:255',
+                'post_code'      => 'required|digits:6',
+                'shipping'       => 'required',
+                'payment_method' => 'required|in:upi,cod,paypal',
+            ],
+            [
+                'first_name.required' => 'Please enter your first name 😊',
+                'last_name.required'  => 'Please enter your last name',
+                'email.required'      => 'We need your email address',
+                'email.email'         => 'Please enter a valid email address',
+                'phone.required'      => 'Please enter your mobile number',
+                'phone.regex'         => 'Enter a valid 10-digit Indian mobile number 🇮🇳',
+                'state.required'      => 'Please select your state',
+                'address1.required'   => 'Full address is required',
+                'post_code.required'  => 'PIN code is required',
+                'post_code.digits'    => 'PIN code must be 6 digits',
+                'shipping.required'   => 'Please select a shipping option',
+                'payment_method.required' => 'Please select a payment method',
+            ]
+        );
 
-        if(empty(Cart::where('user_id',auth()->user()->id)->where('order_id',null)->first())){
-            request()->session()->flash('error','Cart is Empty !');
-            return back();
+        if (
+            empty(
+                Cart::where('user_id', auth()->user()->id)
+                    ->where('order_id', null)
+                    ->first()
+            )
+        ) {
+            return back()->with('error', 'Your cart is empty 🛒');
         }
-        // $cart=Cart::get();
-        // // return $cart;
-        // $cart_index='ORD-'.strtoupper(uniqid());
-        // $sub_total=0;
-        // foreach($cart as $cart_item){
-        //     $sub_total+=$cart_item['amount'];
-        //     $data=array(
-        //         'cart_id'=>$cart_index,
-        //         'user_id'=>$request->user()->id,
-        //         'product_id'=>$cart_item['id'],
-        //         'quantity'=>$cart_item['quantity'],
-        //         'amount'=>$cart_item['amount'],
-        //         'status'=>'new',
-        //         'price'=>$cart_item['price'],
-        //     );
 
-        //     $cart=new Cart();
-        //     $cart->fill($data);
-        //     $cart->save();
-        // }
+        $order = new Order();
+        $order_data = $request->all();
 
-        // $total_prod=0;
-        // if(session('cart')){
-        //         foreach(session('cart') as $cart_items){
-        //             $total_prod+=$cart_items['quantity'];
-        //         }
-        // }
+        $order_data['order_number'] = 'ORD-' . strtoupper(Str::random(10));
+        $order_data['user_id'] = auth()->user()->id;
+        $order_data['shipping_id'] = $request->shipping;
+        $order_data['sub_total'] = Helper::totalCartPrice();
+        $order_data['quantity'] = Helper::cartCount();
+        $order_data['status'] = 'new';
 
-        $order=new Order();
-        $order_data=$request->all();
-        $order_data['order_number']='ORD-'.strtoupper(Str::random(10));
-        $order_data['user_id']=$request->user()->id;
-        $order_data['shipping_id']=$request->shipping;
-        $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
-        // return session('coupon')['value'];
-        $order_data['sub_total']=Helper::totalCartPrice();
-        $order_data['quantity']=Helper::cartCount();
-        if(session('coupon')){
-            $order_data['coupon']=session('coupon')['value'];
+        $shipping_price = Shipping::where('id', $request->shipping)->value('price') ?? 0;
+        $coupon_value = session('coupon')['value'] ?? 0;
+
+        $order_data['coupon'] = $coupon_value;
+        $order_data['total_amount'] =
+            Helper::totalCartPrice() + $shipping_price - $coupon_value;
+
+        if ($request->payment_method === 'paypal') {
+            $order_data['payment_method'] = 'paypal';
+            $order_data['payment_status'] = 'paid';
+        } elseif ($request->payment_method === 'upi') {
+            $order_data['payment_method'] = 'upi';
+            $order_data['payment_status'] = 'paid';
+        } else {
+            $order_data['payment_method'] = 'cod';
+            $order_data['payment_status'] = 'Unpaid';
         }
-        if($request->shipping){
-            if(session('coupon')){
-                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0]-session('coupon')['value'];
-            }
-            else{
-                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0];
-            }
-        }
-        else{
-            if(session('coupon')){
-                $order_data['total_amount']=Helper::totalCartPrice()-session('coupon')['value'];
-            }
-            else{
-                $order_data['total_amount']=Helper::totalCartPrice();
-            }
-        }
-        // return $order_data['total_amount'];
-        $order_data['status']="new";
-        if(request('payment_method')=='paypal'){
-            $order_data['payment_method']='paypal';
-            $order_data['payment_status']='paid';
-        }
-        else{
-            $order_data['payment_method']='cod';
-            $order_data['payment_status']='Unpaid';
-        }
+
         $order->fill($order_data);
-        $status=$order->save();
-        if($order)
-        // dd($order->id);
-        $users=User::where('role','admin')->first();
-        $details=[
-            'title'=>'New order created',
-            'actionURL'=>route('order.show',$order->id),
-            'fas'=>'fa-file-alt'
-        ];
-        Notification::send($users, new StatusNotification($details));
-        if(request('payment_method')=='paypal'){
-            return redirect()->route('payment')->with(['id'=>$order->id]);
-        }
-        else{
-            session()->forget('cart');
-            session()->forget('coupon');
-        }
-        Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+        $order->save();
 
-        // dd($users);        
-        request()->session()->flash('success','Your product successfully placed in order');
-        return redirect()->route('home');
+        Cart::where('user_id', auth()->user()->id)
+            ->where('order_id', null)
+            ->update(['order_id' => $order->id]);
+
+        $admin = User::where('role', 'admin')->first();
+        if ($admin) {
+            Notification::send($admin, new StatusNotification([
+                'title' => 'New order received',
+                'actionURL' => route('order.show', $order->id),
+                'fas' => 'fa-shopping-cart',
+            ]));
+        }
+
+        session()->forget('cart');
+        session()->forget('coupon');
+
+        if ($request->payment_method === 'paypal') {
+            return redirect()->route('payment')->with(['id' => $order->id]);
+        }
+
+        return redirect()->route('home')
+            ->with('success', '🎉 Order placed successfully!');
     }
 
     /**
@@ -159,7 +154,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order=Order::find($id);
+        $order=Order::findOrFail($id);
         // return $order;
         return view('backend.order.show')->with('order',$order);
     }
@@ -172,7 +167,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order=Order::find($id);
+        $order=Order::findOrFail($id);
         return view('backend.order.edit')->with('order',$order);
     }
 
@@ -185,8 +180,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order=Order::find($id);
-        $this->validate($request,[
+        $order=Order::findOrFail($id);
+        $request->validate([
             'status'=>'required|in:new,process,delivered,cancel'
         ]);
         $data=$request->all();
@@ -217,14 +212,14 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order=Order::find($id);
+        $order=Order::findOrFail($id);
         if($order){
             $status=$order->delete();
             if($status){
                 request()->session()->flash('success','Order Successfully deleted');
             }
             else{
-                request()->session()->flash('error','Order can not deleted');
+                request()->session()->flash('error','Order cannot be deleted');
             }
             return redirect()->route('order.index');
         }
@@ -264,7 +259,7 @@ class OrderController extends Controller
             }
         }
         else{
-            request()->session()->flash('error','Invalid order numer please try again');
+            request()->session()->flash('error','Invalid order number, please try again');
             return back();
         }
     }

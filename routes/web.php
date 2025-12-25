@@ -111,7 +111,7 @@
 
 // NewsLetter
     Route::post('/subscribe', [FrontendController::class, 'subscribe'])->name('subscribe');
-
+    
 // Product Review
     Route::resource('/review', 'ProductReviewController');
     Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
@@ -126,6 +126,15 @@
     Route::get('cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
     Route::get('payment/success', [PayPalController::class, 'success'])->name('payment.success');
 
+// Terms & Conditiona    
+    Route::view('/terms-and-conditions', 'frontend.pages.terms')
+    ->name('terms');
+
+// FAQ Section
+    Route::view('/faq', 'frontend.pages.faq')->name('faq');
+
+// Help
+    Route::view('/help', 'frontend.pages.help')->name('help');
 
 // Backend section start
 

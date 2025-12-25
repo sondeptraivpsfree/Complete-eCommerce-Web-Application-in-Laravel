@@ -27,7 +27,7 @@
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
                         <h2>Login</h2>
-                        <p>Please register in order to checkout more quickly</p>
+                        <p>Please sign in order to checkout more quickly</p>
                         <!-- Form -->
                         <form class="form" method="post" action="{{route('login.submit')}}">
                             @csrf
@@ -51,14 +51,19 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-group login-btn">
+                                    <div class="form-group login-btn social-login">
                                         <button class="btn" type="submit">Login</button>
                                         <a href="{{route('register.form')}}" class="btn">Register</a>
-                                        OR
-                                        <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
-                                        <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
-                                        <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
-
+                                        <span class="or-text">OR, CONTINUE WITH</span>   
+                                        <a href="{{ route('login.redirect','google') }}" class="btn-google-modern">
+                                            <img src="{{ asset('frontend/icons/google.svg') }}" alt="Google">
+                                            <span></span>
+                                        </a>
+                                        <span class="or-text">OR</span> 
+                                        <a href="{{ route('login.redirect','facebook') }}" class="btn-facebook-modern">
+                                            <img src="{{ asset('frontend/icons/facebook.svg') }}" alt="Facebook">
+                                            <span></span>
+                                        </a>
                                     </div>
                                     <div class="checkbox">
                                         <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Remember me</label>
@@ -81,28 +86,95 @@
 @endsection
 @push('styles')
 <style>
-    .shop.login .form .btn{
-        margin-right:0;
-    }
-    .btn-facebook{
-        background:#39579A;
-    }
-    .btn-facebook:hover{
-        background:#073088 !important;
-    }
-    .btn-github{
-        background:#444444;
-        color:white;
-    }
-    .btn-github:hover{
-        background:black !important;
-    }
-    .btn-google{
-        background:#ea4335;
-        color:white;
-    }
-    .btn-google:hover{
-        background:rgb(243, 26, 26) !important;
-    }
+    /* ================================
+       BUTTON ROW
+    ================================ */
+    
+    .shop.login .form .social-login {
+        display: flex;              
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;                 
+    }   
+    /* Remove legacy spacing */
+    .shop.login .form .btn {
+        margin-right: 0;
+        border-radius: 4px !important;
+    }  
+    /* OR text */
+    .social-login .or-text {
+        font-size: 13px;
+        color: #666;
+        white-space: nowrap;
+        line-height: 1;
+    }  
+    /* ================================
+       GOOGLE BUTTON
+    ================================ */
+    
+    .btn-google-modern {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    
+        height: 44px;
+        width: 60px;                
+        padding: 0;
+    
+        background: #fff;
+        color: #3c4043;
+    
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+    
+        box-shadow: 0 1px 2px rgba(60,64,67,.15);
+        text-decoration: none;
+    
+        transition: all 0.25s ease;
+    } 
+    .btn-google-modern img {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }   
+    .btn-google-modern:hover {
+        background: #f8f9fa;
+        box-shadow: 0 2px 6px rgba(60,64,67,.2);
+        transform: translateY(-1px);
+    }  
+    /* ================================
+       FACEBOOK BUTTON
+    ================================ */
+    
+    .btn-facebook-modern {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    
+        height: 44px;
+        width: 60px;                
+        padding: 0;
+    
+        background: #1877F2;
+        color: #fff;
+    
+        border: 1px solid #1877F2;
+        border-radius: 4px;
+    
+        box-shadow: 0 1px 2px rgba(60,64,67,.15);
+        text-decoration: none;
+    
+        transition: all 0.25s ease;
+    }    
+    .btn-facebook-modern img {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }    
+    .btn-facebook-modern:hover {
+        background: #3f5c9c;
+        box-shadow: 0 2px 6px rgba(60,64,67,.2);
+        transform: translateY(-1px);
+    }    
 </style>
 @endpush

@@ -1031,12 +1031,14 @@
 .ti-soundcloud:before {
 	content: "\e74f";
 }
+/*
 .ti-sharethis:before {
 	content: "\e750";
 }
 .ti-sharethis-alt:before {
 	content: "\e751";
 }
+*/
 .ti-reddit:before {
 	content: "\e752";
 }

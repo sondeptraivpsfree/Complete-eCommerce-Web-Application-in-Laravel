@@ -102,7 +102,10 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>
+                                                <p class="price">
+                                                    <del class="text-muted">₹{{ number_format($product->price,2) }}</del>
+                                                    ₹{{ number_format($org,2) }}
+                                                </p>
 
                                             </div>
                                         </div>
@@ -192,8 +195,8 @@
                                                 @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <span>₹{{ number_format($after_discount,2) }}</span>
+                                                <del style="padding-left:4%;">₹{{ number_format($product->price,2) }}</del>
                                             </div>
                                         </div>
                                     </div>
@@ -201,16 +204,12 @@
                             @else
                                     <h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
                             @endif
-
-
-
                         </div>
                         <div class="row">
                             <div class="col-md-12 justify-content-center d-flex">
-                                {{$products->appends($_GET)->links()}}
+                                {{$products->appends($_GET)->links('vendor.pagination.custom')}}
                             </div>
                           </div>
-
                     </div>
                 </div>
             </div>
@@ -218,8 +217,6 @@
     </form>
 
     <!--/ End Product Style 1  -->
-
-
 
     <!-- Modal -->
     @if($products)
@@ -285,7 +282,10 @@
                                             @php
                                                 $after_discount=($product->price-($product->price*$product->discount)/100);
                                             @endphp
-                                            <h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3>
+                                            <h3>
+                                                <small><del class="text-muted">₹{{ number_format($product->price,2) }}</del></small>
+                                                ₹{{ number_format($after_discount,2) }}
+                                            </h3>
                                             <div class="quickview-peragraph">
                                                 <p>{!! html_entity_decode($product->summary) !!}</p>
                                             </div>
@@ -353,16 +353,14 @@
                                                     <a href="{{route('add-to-wishlist',$product->slug)}}" class="btn min"><i class="ti-heart"></i></a>
                                                 </div>
                                             </form>
-                                            <div class="default-social">
-                                            <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
             </div>
+            
         @endforeach
     @endif
     <!-- Modal end -->
@@ -370,18 +368,78 @@
 @endsection
 @push('styles')
 <style>
-    .pagination{
-        display:inline-flex;
+    .pagination {
+        display: flex !important;
+        justify-content: center;
+        gap: 10px;
+        margin: 30px 0;
+        padding: 0;
+        list-style: none;
     }
-    .filter_button{
-        /* height:20px; */
-        text-align: center;
-        background:#F7941D;
-        padding:8px 16px;
-        margin-top:10px;
-        color: white;
+
+    .pagination .page-item {
+        display: inline-block;
+    }
+
+    .pagination .page-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        padding: 0 14px;
+        border: none;
+        background: #ffffff;
+        color: #444;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        transition: transform 0.12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+        text-decoration: none;
+    }
+
+    .pagination .page-link:hover {
+        transform: translateY(-4px);
+        background: #fff2e6; /* light orange tint */
+        color: #111;
+        box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+    }
+
+    /* Active page */
+    .pagination .active .page-link,
+    .pagination .page-item.active > .page-link {
+        background: #F7941D; 
+        color: #fff !important;
+        box-shadow: 0 10px 30px rgba(247,148,29,0.28);
+        transform: translateY(-4px);
+    }
+
+    /* Disabled buttons */
+    .pagination .disabled .page-link,
+    .pagination .page-item.disabled > .page-link {
+        background: #f4f4f4;
+        color: #aaa;
+        pointer-events: none;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* smaller dots / separator string styling */
+    .pagination .page-item.disabled .page-link {
+        cursor: default;
+    }
+
+    /* mobile adjustments */
+    @media (max-width: 480px) {
+        .pagination .page-link {
+            min-width: 38px;
+            height: 38px;
+            padding: 0 10px;
+            font-size: 14px;
+        }
     }
 </style>
+
 @endpush
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>

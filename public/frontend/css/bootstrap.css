@@ -4620,8 +4620,8 @@ tbody.collapse.show {
 }
 
 .badge-success {
-    color: #fff;
-    background-color: #28a745
+    font-size: 14px;
+    color: #28a745;
 }
 
 .badge-success[href]:focus,
@@ -4656,8 +4656,8 @@ tbody.collapse.show {
 }
 
 .badge-danger {
-    color: #fff;
-    background-color: #dc3545
+    font-size: 14px;
+    color: #dc3545; 
 }
 
 .badge-danger[href]:focus,
