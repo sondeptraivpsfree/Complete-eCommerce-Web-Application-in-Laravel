@@ -1,5 +1,5 @@
 ![MIT License](https://img.shields.io/badge/license-MIT-green)
-![Laravel](https://img.shields.io/badge/laravel)
+![Laravel](https://img.shields.io/badge/laravel-10-red)
 ![PHP](https://img.shields.io/badge/php-%3E%3D8.0-blue)
 
 # 🚀 Complete eCommerce Web Application in Laravel
