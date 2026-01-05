@@ -100,8 +100,6 @@ php artisan serve
 📧 **Email:** `admin@gmail.com`  
 🔑 **Password:** `1111`
 
----
-
 **⚠️ Note: Default admin credentials are for demo purposes only. Please change them immediately in production.**
 
 
